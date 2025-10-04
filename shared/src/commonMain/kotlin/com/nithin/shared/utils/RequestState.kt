@@ -27,6 +27,4 @@ sealed interface RequestState<out T> {
     fun getErrorMessage() = (this as Error).message
 
 
-
-
 }

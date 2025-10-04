@@ -27,6 +27,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+include(":navigation")
 include(":shared")
 
 include(":shared")
