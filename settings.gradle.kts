@@ -28,6 +28,7 @@ dependencyResolutionManagement {
     }
 }
 include(":navigation")
+include(":network")
 include(":shared")
 
 include(":shared")
