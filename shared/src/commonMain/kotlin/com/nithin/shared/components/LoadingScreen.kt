@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun LoadingScreen(
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ){
     Box(
         modifier = modifier,
