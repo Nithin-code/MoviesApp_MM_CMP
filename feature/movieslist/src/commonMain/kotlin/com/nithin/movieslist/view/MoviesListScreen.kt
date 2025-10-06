@@ -20,18 +20,20 @@ import com.nithin.network.getHttpClient
 import com.nithin.shared.components.ErrorCard
 import com.nithin.shared.components.LoadingScreen
 import com.nithin.shared.utils.DisplayResult
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun HomeScreen(
-) {
+fun HomeScreen() {
 
-    val moviesRepo = remember {
-        MoviesListRepositoryImpl(createHttpClient())
-    }
+//    val moviesRepo = remember {
+//        MoviesListRepositoryImpl(createHttpClient())
+//    }
 
-    val moviesViewModel = remember {
-        MoviesListviewModel(moviesRepo)
-    }
+//    val moviesViewModel = remember {
+//        MoviesListviewModel(moviesRepo)
+//    }
+
+    val moviesViewModel = koinViewModel<MoviesListviewModel>()
 
     val moviesResponse = moviesViewModel.screenState
 
