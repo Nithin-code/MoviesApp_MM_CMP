@@ -27,6 +27,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+include(":di")
 include(":feature:movieslist")
 include(":navigation")
 include(":network")
