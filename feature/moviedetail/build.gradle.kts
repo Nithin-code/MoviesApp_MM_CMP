@@ -23,7 +23,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "navigation"
+            baseName = "moviedetail"
             isStatic = true
         }
     }
@@ -43,15 +43,18 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.runtimeCompose)
 
-            implementation(libs.compose.navigation)
+            implementation(libs.coil.compose.core)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.core)
+            implementation(libs.coil.svg)
+            implementation(libs.coil.network.ktor)
 
-//            implementation(project(path = ":feature:auth"))
-//            implementation(project(path = ":feature:home"))
-//            implementation(project(path = ":feature:profile"))
-            implementation(project(path = ":feature:movieslist"))
-            implementation(project(path = ":feature:moviedetail"))
+
             implementation(project(path = ":shared"))
             implementation(project(path = ":network"))
+
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -60,7 +63,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.nithin.navigation"
+    namespace = "com.nithin.moviedetail"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
