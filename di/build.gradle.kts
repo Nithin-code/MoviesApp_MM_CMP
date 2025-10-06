@@ -41,6 +41,7 @@ kotlin {
             implementation(libs.koin.core)
             implementation(libs.koin.compose.viewmodel)
             implementation(project(path = ":feature:movieslist"))
+            implementation(project(path = ":feature:moviedetail"))
             implementation(project(path = ":network"))
             implementation(libs.bundles.ktor)
 

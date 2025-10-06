@@ -23,7 +23,9 @@ import com.nithin.shared.utils.DisplayResult
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onMovieItemClick : (String) -> Unit
+) {
 
 //    val moviesRepo = remember {
 //        MoviesListRepositoryImpl(createHttpClient())
@@ -71,7 +73,10 @@ fun HomeScreen() {
 
                    items(movieData.value.movie){ item->
                        MovieItem(
-                           movie = item
+                           movie = item,
+                           onItemClick = { id->
+                               onMovieItemClick.invoke(id)
+                           }
                        )
                    }
 

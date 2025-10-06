@@ -28,6 +28,7 @@ dependencyResolutionManagement {
     }
 }
 include(":di")
+include(":feature:moviedetail")
 include(":feature:movieslist")
 include(":navigation")
 include(":network")
