@@ -12,19 +12,25 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.nithin.movieslist.repository.MoviesListRepository
+import com.nithin.movieslist.repository.MoviesListRepositoryImpl
 import com.nithin.movieslist.view.components.MovieItem
 import com.nithin.movieslist.viewmodel.MoviesListviewModel
+import com.nithin.network.createHttpClient
+import com.nithin.network.getHttpClient
 import com.nithin.shared.components.ErrorCard
 import com.nithin.shared.components.LoadingScreen
 import com.nithin.shared.utils.DisplayResult
 
 @Composable
-fun MoviesListScreen(
-    movieRepository: MoviesListRepository
+fun HomeScreen(
 ) {
 
+    val moviesRepo = remember {
+        MoviesListRepositoryImpl(createHttpClient())
+    }
+
     val moviesViewModel = remember {
-        MoviesListviewModel(movieRepository)
+        MoviesListviewModel(moviesRepo)
     }
 
     val moviesResponse = moviesViewModel.screenState

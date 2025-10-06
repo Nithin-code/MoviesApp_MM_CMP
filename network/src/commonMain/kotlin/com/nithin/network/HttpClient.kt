@@ -9,7 +9,7 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 fun createHttpClient(
-    engine: HttpClientEngine
+    engine: HttpClientEngine = getHttpClient()
 ) : HttpClient {
 
     return HttpClient(engine = engine){
@@ -30,3 +30,5 @@ fun createHttpClient(
     }
 
 }
+
+expect fun getHttpClient() : HttpClientEngine

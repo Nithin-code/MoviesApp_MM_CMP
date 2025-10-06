@@ -39,6 +39,10 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+
+            implementation(project(path = ":navigation"))
+            implementation(project(path = ":shared"))
+            implementation(project(path = ":network"))
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
