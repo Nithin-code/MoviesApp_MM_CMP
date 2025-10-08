@@ -4,6 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import com.nithin.di.movieDetailModule
 import com.nithin.di.movieListModule
+import com.nithin.di.platformModule
 import com.nithin.navigation.NavGraph
 import com.nithin.shared.Screens
 
@@ -16,19 +17,9 @@ fun App() {
 
     MaterialTheme {
 
-        KoinApplication(
-            application = {
-                modules(
-                    movieListModule,
-                    movieDetailModule
-                )
-            }
-        ){
-            NavGraph(
-                startDestination = Screens.MovieListScreen,
-            )
-        }
-
+        NavGraph(
+            startDestination = Screens.MovieListScreen,
+        )
 
     }
 }

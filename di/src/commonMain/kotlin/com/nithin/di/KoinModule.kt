@@ -10,6 +10,7 @@ import com.nithin.network.createHttpClient
 import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
 import org.koin.core.module.dsl.viewModelOf
+import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
 
 val movieListModule = module {
@@ -23,13 +24,19 @@ val movieDetailModule = module {
     viewModelOf(::MovieDetailViewModel)
 }
 
-//fun initializeKoin(
-//    application: ((KoinApplication) -> Unit)? = null
-//){
-//
-//    startKoin {
-//        application?.invoke(this)
-//        modules(koinModule)
-//    }
-//
-//}
+
+fun initKoin(
+    config : KoinAppDeclaration? = null
+){
+
+    startKoin {
+        config?.invoke(this)
+        modules(
+            movieListModule,
+            movieDetailModule,
+            platformModule,
+            dataModule
+        )
+    }
+
+}
