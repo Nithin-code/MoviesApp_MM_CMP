@@ -26,12 +26,13 @@ import com.nithin.shared.FontSize
 import com.nithin.shared.Resources
 import com.nithin.shared.components.ImageWithLoader
 import com.nithin.shared.domain.Movie
+import com.nithin.shared.domain.MovieScreenState
 
 @Composable
 fun MovieItem(
-    movie: Movie,
+    movie: MovieScreenState,
     modifier: Modifier = Modifier,
-    onItemClick : (String) -> Unit
+    onItemClick : (String) -> Unit,
 ){
 
     Surface(
@@ -92,7 +93,8 @@ fun MovieItem(
             ){
                 Icon(
                     imageVector = Icons.Default.Favorite,
-                    contentDescription = "favorite_icon"
+                    contentDescription = "favorite_icon",
+                    tint = if (movie.isBookMarked) Color.Red else Color.DarkGray
                 )
             }
 

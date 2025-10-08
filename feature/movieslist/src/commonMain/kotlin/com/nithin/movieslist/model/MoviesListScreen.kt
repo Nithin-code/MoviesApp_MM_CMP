@@ -1,11 +1,12 @@
 package com.nithin.movieslist.model
 
 import com.nithin.shared.domain.Movie
+import com.nithin.shared.domain.MovieScreenState
 import com.nithin.shared.domain.Rating
 
 data class MoviesListScreen(
     val query : String = "",
-    val movie: List<Movie> = emptyList()
+    val movie: List<MovieScreenState> = emptyList()
 )
 
 //Movie(

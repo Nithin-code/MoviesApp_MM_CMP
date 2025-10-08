@@ -5,26 +5,40 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nithin.database.movieDetailDb.MovieDao
 import com.nithin.movieslist.model.MoviesListScreen
 import com.nithin.movieslist.repository.MoviesListRepository
 import com.nithin.shared.domain.Movie
+import com.nithin.shared.domain.MovieScreenState
+import com.nithin.shared.domain.toMovieScreenState
 import com.nithin.shared.utils.RequestState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MoviesListviewModel(
-    val moviesListRepository: MoviesListRepository
+    val moviesListRepository: MoviesListRepository,
+    val movieDao: MovieDao
 ) : ViewModel() {
 
     var screenState: RequestState<Unit> by mutableStateOf(RequestState.Loading)
 
     var uiStateFlow = MutableStateFlow(MoviesListScreen())
 
-    lateinit var totalMoviesList : List<Movie>
+    var totalMoviesList : List<MovieScreenState> = emptyList()
 
     init {
         refresh()
+    }
+
+    fun checkForBookMarks(){
+        viewModelScope.launch {
+            uiStateFlow.update {
+                MoviesListScreen(movie = totalMoviesList.map { movieScreenState ->
+                    movieScreenState.copy(isBookMarked = movieDao.isBookMarked(movieScreenState.id))
+                })
+            }
+        }
     }
 
 
@@ -33,10 +47,11 @@ class MoviesListviewModel(
 
             val requestState = moviesListRepository.getAllMoviesList()
 
-
             if (requestState.isSuccess()) {
                 screenState = RequestState.Success(data = Unit)
-                totalMoviesList = requestState.getSuccessData()
+                totalMoviesList = requestState.getSuccessData().map { movie ->
+                    movie.toMovieScreenState(movieDao.isBookMarked(movie.id))
+                }
                 uiStateFlow.value = MoviesListScreen(movie = totalMoviesList)
             } else if (requestState.isError()) {
                 screenState = RequestState.Error(message = requestState.getErrorMessage())
