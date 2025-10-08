@@ -1,6 +1,5 @@
-package com.nithin.moviedetail.model
+package com.nithin.shared.domain
 
-import com.nithin.shared.domain.Rating
 
 data class MovieScreenState(
     val id: String = "",

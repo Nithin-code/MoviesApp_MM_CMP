@@ -1,8 +1,8 @@
-package com.nithin.moviedetail.model
+package com.nithin.shared.domain
 
-import com.nithin.shared.domain.Movie
-
-fun Movie.toMovieScreenState() : MovieScreenState{
+fun Movie.toMovieScreenState(
+    isBookMarked : Boolean
+) : MovieScreenState {
     return MovieScreenState(
         id = id,
         createdAt = createdAt,
@@ -16,5 +16,6 @@ fun Movie.toMovieScreenState() : MovieScreenState{
         cast = cast,
         box_office_usd = box_office_usd,
         description = description,
+        isBookMarked = isBookMarked
     )
 }

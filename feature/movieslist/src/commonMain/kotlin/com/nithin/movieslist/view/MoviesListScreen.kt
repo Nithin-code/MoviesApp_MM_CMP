@@ -8,20 +8,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.nithin.movieslist.repository.MoviesListRepository
-import com.nithin.movieslist.repository.MoviesListRepositoryImpl
 import com.nithin.movieslist.view.components.MovieItem
 import com.nithin.movieslist.view.components.SearchBar
 import com.nithin.movieslist.viewmodel.MoviesListviewModel
-import com.nithin.network.createHttpClient
-import com.nithin.network.getHttpClient
 import com.nithin.shared.components.ErrorCard
 import com.nithin.shared.components.LoadingScreen
 import com.nithin.shared.utils.DisplayResult
@@ -46,6 +39,10 @@ fun HomeScreen(
     val moviesResponse = moviesViewModel.screenState
 
     val movieData = moviesViewModel.uiStateFlow.collectAsState()
+
+    LaunchedEffect(Unit){
+        moviesViewModel.checkForBookMarks()
+    }
 
 
 
@@ -98,7 +95,7 @@ fun HomeScreen(
                             movie = item,
                             onItemClick = { id ->
                                 onMovieItemClick.invoke(id)
-                            }
+                            },
                         )
                     }
 

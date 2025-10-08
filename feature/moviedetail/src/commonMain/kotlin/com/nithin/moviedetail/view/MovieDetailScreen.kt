@@ -31,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.nithin.moviedetail.model.MovieScreenState
 import com.nithin.moviedetail.view.components.DescriptionCard
 import com.nithin.moviedetail.viewmodel.MovieDetailViewModel
 import com.nithin.shared.FontSize
@@ -41,6 +40,7 @@ import com.nithin.shared.components.ErrorCard
 import com.nithin.shared.components.ImageWithLoader
 import com.nithin.shared.components.LoadingScreen
 import com.nithin.shared.domain.Movie
+import com.nithin.shared.domain.MovieScreenState
 import com.nithin.shared.utils.DisplayResult
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -84,13 +84,14 @@ fun MovieDetailScreen(
                 actions = {
                     IconButton(
                         onClick = {
-
+                            movieDetailViewModel.bookMarkMovieDetail(movie)
                         },
 
                     ){
                         Icon(
                             imageVector = Resources.FavoriteIcon,
-                            contentDescription = "Fav Icon"
+                            contentDescription = "Fav Icon",
+                            tint = if (movie.isBookMarked) Color.Red else Color.DarkGray
                         )
                     }
                 }
@@ -133,15 +134,7 @@ internal fun MovieDetailScreenContent(
     paddingValues: PaddingValues
 ){
 
-    var castDetails by remember {
-        mutableStateOf(movie.cast[0])
-    }
 
-    movie.cast.forEachIndexed { index, text ->
-        if (index>0){
-            castDetails = "$castDetails/$text"
-        }
-    }
 
     LazyColumn(
         modifier = Modifier
@@ -228,7 +221,7 @@ internal fun MovieDetailScreenContent(
                 )
 
                 Text(
-                    text = "${movie.genre[0]}/${movie.genre[1]}",
+                    text = movie.genre.toString(),
                     fontFamily = Resources.getUbuntuRegularFont()
                 )
 
@@ -261,7 +254,7 @@ internal fun MovieDetailScreenContent(
                 modifier = Modifier
                     .fillMaxWidth(),
                 title = "Cast",
-                subTitle = castDetails
+                subTitle = movie.cast.toString()
             )
         }
 

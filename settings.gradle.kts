@@ -27,6 +27,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+include(":database")
 include(":di")
 include(":feature:moviedetail")
 include(":feature:movieslist")

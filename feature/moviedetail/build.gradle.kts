@@ -52,6 +52,7 @@ kotlin {
 
             implementation(project(path = ":shared"))
             implementation(project(path = ":network"))
+            implementation(project(path = ":database"))
 
             implementation(libs.koin.compose)
             implementation(libs.koin.compose.viewmodel)

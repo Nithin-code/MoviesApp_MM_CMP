@@ -26,7 +26,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            baseName = "di"
+            baseName = "database"
             isStatic = true
         }
     }
@@ -43,12 +43,7 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.core)
             implementation(libs.koin.compose.viewmodel)
-            implementation(project(path = ":feature:movieslist"))
-            implementation(project(path = ":feature:moviedetail"))
-            implementation(project(path = ":network"))
-            implementation(project(path= ":database"))
 
-            implementation(libs.bundles.ktor)
             implementation(libs.room.runtime)
             implementation(libs.sqlite.bundled)
 
@@ -60,7 +55,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.nithin.di"
+    namespace = "com.nithin.database"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
@@ -76,6 +71,7 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
     ksp(libs.room.compiler)
+    debugImplementation(compose.uiTooling)
 }
 
 room {
