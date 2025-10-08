@@ -2,29 +2,35 @@ package com.nithin.movieslist.view
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.nithin.movieslist.repository.MoviesListRepository
 import com.nithin.movieslist.repository.MoviesListRepositoryImpl
 import com.nithin.movieslist.view.components.MovieItem
+import com.nithin.movieslist.view.components.SearchBar
 import com.nithin.movieslist.viewmodel.MoviesListviewModel
 import com.nithin.network.createHttpClient
 import com.nithin.network.getHttpClient
 import com.nithin.shared.components.ErrorCard
 import com.nithin.shared.components.LoadingScreen
 import com.nithin.shared.utils.DisplayResult
+import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun HomeScreen(
-    onMovieItemClick : (String) -> Unit
+    onMovieItemClick: (String) -> Unit
 ) {
 
 //    val moviesRepo = remember {
@@ -40,6 +46,7 @@ fun HomeScreen(
     val moviesResponse = moviesViewModel.screenState
 
     val movieData = moviesViewModel.uiStateFlow.collectAsState()
+
 
 
     moviesResponse.DisplayResult(
@@ -65,20 +72,35 @@ fun HomeScreen(
             Scaffold { paddingValues ->
                 LazyColumn(
                     modifier = Modifier
-                        .padding(top = paddingValues.calculateTopPadding(), bottom = paddingValues.calculateBottomPadding())
+                        .padding(
+                            top = paddingValues.calculateTopPadding(),
+                            bottom = paddingValues.calculateBottomPadding()
+                        )
                         .padding(horizontal = 16.dp)
                         .fillMaxSize(),
                     verticalArrangement = Arrangement.spacedBy(24.dp)
                 ) {
 
-                   items(movieData.value.movie){ item->
-                       MovieItem(
-                           movie = item,
-                           onItemClick = { id->
-                               onMovieItemClick.invoke(id)
-                           }
-                       )
-                   }
+                    stickyHeader {
+
+                        SearchBar(
+                            modifier = Modifier.fillMaxWidth(),
+                            query = movieData.value.query,
+                            onSearch = {
+                                moviesViewModel.updateQuery(it)
+                            }
+                        )
+
+                    }
+
+                    items(movieData.value.movie) { item ->
+                        MovieItem(
+                            movie = item,
+                            onItemClick = { id ->
+                                onMovieItemClick.invoke(id)
+                            }
+                        )
+                    }
 
                 }
             }
@@ -86,4 +108,13 @@ fun HomeScreen(
         },
     )
 
+}
+
+
+@Preview
+@Composable
+fun Prev() {
+    HomeScreen {
+
+    }
 }
